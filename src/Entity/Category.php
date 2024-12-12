@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity]
 #[ORM\Table(name: "category")]
@@ -14,6 +15,11 @@ class Category
     private int $idCategory;
 
     #[ORM\Column(name: "nomCategory", type: "string", length: 255)]
+    #[Assert\NotBlank(message: "Le nom de la catégorie ne peut pas être vide.")]
+    #[Assert\Length(
+        max: 255,
+        maxMessage: "Le nom de la catégorie ne doit pas dépasser {{ limit }} caractères."
+    )]
     private string $nomCategory;
 
     public function getIdCategory(): int
@@ -32,4 +38,3 @@ class Category
         return $this;
     }
 }
-
